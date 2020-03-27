@@ -1,18 +1,28 @@
 package com.example.AccountService.Controller;
 
 import com.example.AccountService.Model.AccountModel;
-import com.example.AccountService.Model.BranchModel;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
+
+@RefreshScope
 @RestController
 @RequestMapping("/account")
 @Api(value = "AccountServiceController", description = "REST APIs related to Account Service")
 public class AccountServiceController {
+
+    @Value("${welcome.message:Hello default}")
+    private String message;
+
+    @GetMapping("/message")
+    String getMessage() {
+        return this.message;
+    }
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success|OK"),
