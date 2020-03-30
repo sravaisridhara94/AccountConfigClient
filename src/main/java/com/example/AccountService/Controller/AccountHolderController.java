@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/accountHolder")
-@Api(value = "AccountHolderController", description = "REST APIs related to Account Holder Service")
+@RequestMapping("/accountHolders")
+@Api(value = "AccountHolderController")
 public class AccountHolderController {
 
     @ApiResponses(value = {
@@ -23,7 +23,7 @@ public class AccountHolderController {
             @ApiResponse(code = 401, message = "not authorized!"),
             @ApiResponse(code = 403, message = "forbidden!!!"),
             @ApiResponse(code = 404, message = "not found!!!") })
-    @GetMapping("/getAll")
+    @GetMapping
     public ResponseEntity<List<AccountHolderModel>> getAllAccountHolders(){
         List<AccountHolderModel> model = new ArrayList<>();
         // Implementation

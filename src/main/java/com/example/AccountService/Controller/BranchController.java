@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/branch")
-@Api(value = "BranchController", description = "REST APIs related to Branch Service")
+@RequestMapping("/branches")
+@Api(value = "BranchController")
 public class BranchController {
 
     @ApiResponses(value = {
@@ -21,8 +21,8 @@ public class BranchController {
             @ApiResponse(code = 401, message = "not authorized!"),
             @ApiResponse(code = 403, message = "forbidden!!!"),
             @ApiResponse(code = 404, message = "not found!!!") })
-    @GetMapping("/getAll")
-    public ResponseEntity<List<BranchModel>> getAllBranches(){
+    @GetMapping
+    public ResponseEntity<List<BranchModel>> fetchBranches(){
         List<BranchModel> model = new ArrayList<>();
         // Implementation
         return ResponseEntity.ok().body(model);
@@ -34,7 +34,7 @@ public class BranchController {
             @ApiResponse(code = 403, message = "forbidden!!!"),
             @ApiResponse(code = 404, message = "not found!!!") })
     @GetMapping("/{branchId}")
-    public ResponseEntity<BranchModel> getByBranchId(@ApiParam @PathVariable long branchId){
+    public ResponseEntity<BranchModel> fetchBranchId(@ApiParam @PathVariable long branchId){
         // Implementation
         return ResponseEntity.ok().body(new BranchModel());
     }
@@ -44,8 +44,8 @@ public class BranchController {
             @ApiResponse(code = 401, message = "not authorized!"),
             @ApiResponse(code = 403, message = "forbidden!!!"),
             @ApiResponse(code = 404, message = "not found!!!") })
-    @PostMapping("/addOrUpdate")
-    public ResponseEntity<BranchModel> addOrUpdate(@RequestBody BranchModel model){
+    @PostMapping
+    public ResponseEntity<BranchModel> addOrUpdateBranch(@RequestBody BranchModel model){
         // Implementation
         return ResponseEntity.ok().body(new BranchModel());
     }
