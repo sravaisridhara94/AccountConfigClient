@@ -1,25 +1,27 @@
-package com.example.AccountService.Model;
+package com.example.AccountService.Entity;
 
-import com.example.AccountService.Entity.AccountType;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@JsonSerialize
-public class AccountModel {
+import javax.persistence.*;
 
-    @JsonProperty
+@Entity
+@Table(name = "AccountDetails")
+public class Account {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "accountId")
     private long accountId;
-    @JsonProperty
+    @Column(name = "accountType")
     private String accountType;
-    @JsonProperty
+    @Column(name = "minimumBalance")
     private long minimumBalance;
-    @JsonProperty
+    @Column(name = "branchId")
     private String branchId;
-    @JsonProperty
+    @Column(name = "creationDate")
     private String creationDate;
-    @JsonProperty
+    @Column(name = "accountHolderId")
     private String accountHolderId;
-    @JsonProperty
+    @Column(name = "balanceAvailable")
     private String balanceAvailable;
 
     public long getAccountId() {

@@ -1,20 +1,33 @@
 package com.example.AccountService.Controller;
 
+import com.example.AccountService.Entity.Account;
+import com.example.AccountService.Helper.AccountMapper;
 import com.example.AccountService.Model.AccountModel;
+import com.example.AccountService.Service.AccountService;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RefreshScope
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/v1/accounts")
 @Api(value = "AccountServiceController")
 public class AccountServiceController {
+
+    private AccountService service;
+
+    @Autowired
+    public AccountServiceController(AccountService service) {
+        this.service = service;
+    }
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success|OK"),
@@ -23,9 +36,9 @@ public class AccountServiceController {
             @ApiResponse(code = 404, message = "not found!!!") })
     @GetMapping
     public ResponseEntity<List<AccountModel>> fetchAccounts(){
-        List<AccountModel> model = new ArrayList<>();
-        // Implementation
-        return ResponseEntity.ok().body(model);
+        List<AccountModel> accounts = service.getAccounts().stream().map(o->AccountMapper.toModel(o))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(accounts);
     }
 
     @ApiResponses(value = {
@@ -35,8 +48,11 @@ public class AccountServiceController {
             @ApiResponse(code = 404, message = "not found!!!") })
     @GetMapping("/{accountId}")
     public ResponseEntity<AccountModel> fetchAccountId(@ApiParam @PathVariable long accountId){
-        // Implementation
-        return ResponseEntity.ok().body(new AccountModel());
+        Optional<Account> account = service.getAccountById(accountId);
+        if (!account.isPresent())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(AccountMapper.toModel(account.get()));
     }
 
     @ApiResponses(value = {
@@ -46,8 +62,14 @@ public class AccountServiceController {
             @ApiResponse(code = 404, message = "not found!!!") })
     @PostMapping
     public ResponseEntity<AccountModel> addOrUpdateAccount(@RequestBody AccountModel model){
-        // Implementation
-        return ResponseEntity.ok().body(new AccountModel());
+        Optional<Account> account = service.getAccountById(model.getAccountId());
+        if(account.isPresent()){
+            AccountMapper.merge(model, account.get());
+            return ResponseEntity.ok(AccountMapper.toModel(service.saveAccount(account.get())));
+        }else{
+            AccountMapper.toModel(service.saveAccount(AccountMapper.toEntity(model)));
+            return ResponseEntity.ok().build();
+        }
     }
 
     @ApiResponses(value = {
@@ -57,7 +79,11 @@ public class AccountServiceController {
             @ApiResponse(code = 404, message = "not found!!!") })
     @DeleteMapping("/{accountId}")
     public ResponseEntity<AccountModel> deleteAccount(@PathVariable long accountId){
-        // Implementation
+        Optional<Account> account = service.getAccountById(accountId);
+        if(!account.isPresent()){
+            ResponseEntity.notFound().build();
+        }
+        service.deleteAccount(accountId);
         return ResponseEntity.ok().build();
     }
 
