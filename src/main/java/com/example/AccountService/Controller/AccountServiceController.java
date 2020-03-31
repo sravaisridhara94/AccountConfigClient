@@ -15,10 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
-@RefreshScope
 @RestController
 @RequestMapping("/v1/accounts")
+@RefreshScope
 @Api(value = "AccountServiceController")
 public class AccountServiceController {
 
@@ -27,6 +26,15 @@ public class AccountServiceController {
     @Autowired
     public AccountServiceController(AccountService service) {
         this.service = service;
+    }
+
+    //Test Method
+    @Value("${message}")
+    private String message;
+
+    @GetMapping("/message")
+    public String getMessage(){
+        return message;
     }
 
     @ApiResponses(value = {
