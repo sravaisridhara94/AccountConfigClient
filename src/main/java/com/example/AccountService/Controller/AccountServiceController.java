@@ -2,11 +2,11 @@ package com.example.AccountService.Controller;
 
 import com.example.AccountService.Entity.Account;
 import com.example.AccountService.Helper.AccountMapper;
+import com.example.AccountService.Model.AccountHolderModel;
 import com.example.AccountService.Model.AccountModel;
 import com.example.AccountService.Service.AccountService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,20 +21,20 @@ import java.util.stream.Collectors;
 @Api(value = "AccountServiceController")
 public class AccountServiceController {
 
+    @Autowired
     private AccountService service;
+
+    @Autowired
+    private AccountMapper mapper;
+
+    public AccountServiceController(AccountService service, AccountMapper mapper) {
+        this.service = service;
+        this.mapper = mapper;
+    }
 
     @Autowired
     public AccountServiceController(AccountService service) {
         this.service = service;
-    }
-
-    //Test Method
-    @Value("${message}")
-    private String message;
-
-    @GetMapping("/message")
-    public String getMessage(){
-        return message;
     }
 
     @ApiResponses(value = {
@@ -93,6 +93,20 @@ public class AccountServiceController {
         }
         service.deleteAccount(accountId);
         return ResponseEntity.ok().build();
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success|OK"),
+            @ApiResponse(code = 401, message = "not authorized!"),
+            @ApiResponse(code = 403, message = "forbidden!!!"),
+            @ApiResponse(code = 404, message = "not found!!!") })
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<AccountHolderModel> fetchCustomerId(@ApiParam @PathVariable long customerId){
+        Optional<Account> account = service.getAccountById(customerId);
+        if (!account.isPresent())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(mapper.getCustomerById(customerId));
     }
 
 }

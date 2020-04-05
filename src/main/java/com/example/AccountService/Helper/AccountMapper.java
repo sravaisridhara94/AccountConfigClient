@@ -1,9 +1,42 @@
 package com.example.AccountService.Helper;
 
 import com.example.AccountService.Entity.Account;
+import com.example.AccountService.Entity.RefreshableProperties;
+import com.example.AccountService.Infrastructure.RestTemplateFactory;
+import com.example.AccountService.Model.AccountHolderModel;
 import com.example.AccountService.Model.AccountModel;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AccountMapper {
+
+    @Autowired
+    private RestTemplateFactory factory;
+
+    @Autowired
+    private RefreshableProperties properties;
+
+    @HystrixCommand(fallbackMethod = "fallBackEvent", commandKey = "fallBack-event", groupKey = "fallBack-event")
+    @Retryable(maxAttempts = 3)
+    public AccountHolderModel getCustomerById(long customerId){
+        StringBuilder url = new StringBuilder();
+        url.append(properties.getRestCall());
+        url.append("/v1/customers/");
+        url.append(customerId);
+        AccountHolderModel event = factory.getInstance("Customers",properties.getConnectionTimeout(), properties.getRequestTimeout()).getForObject(url.toString(), AccountHolderModel.class);
+        return event;
+    }
+
+    public AccountHolderModel fallBackEvent(long customerId){
+        AccountHolderModel event = new AccountHolderModel();
+        event.setAddress("abcd");
+        event.setCountryOfBirth("India");
+        event.setDob("11-1-1994");
+        return event;
+    }
 
     public static Account toEntity(AccountModel model){
         Account account = new Account();
