@@ -1,16 +1,19 @@
-package com.example.AccountService.Controller;
+package com.example.accountservice.controller;
 
-import com.example.AccountService.Entity.Account;
-import com.example.AccountService.Helper.AccountMapper;
-import com.example.AccountService.Model.AccountHolderModel;
-import com.example.AccountService.Model.AccountModel;
-import com.example.AccountService.Service.AccountService;
-import io.swagger.annotations.*;
+import com.example.accountservice.entity.Account;
+import com.example.accountservice.helper.AccountMapper;
+import com.example.accountservice.helper.AccountServiceRestCalls;
+import com.example.accountservice.helper.CustomerAccountMapperEntity;
+import com.example.accountservice.model.AccountModel;
+import com.example.accountservice.service.AccountService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,9 +28,9 @@ public class AccountServiceController {
     private AccountService service;
 
     @Autowired
-    private AccountMapper mapper;
+    private AccountServiceRestCalls mapper;
 
-    public AccountServiceController(AccountService service, AccountMapper mapper) {
+    public AccountServiceController(AccountService service, AccountServiceRestCalls mapper) {
         this.service = service;
         this.mapper = mapper;
     }
@@ -101,12 +104,12 @@ public class AccountServiceController {
             @ApiResponse(code = 403, message = "forbidden!!!"),
             @ApiResponse(code = 404, message = "not found!!!") })
     @GetMapping("/customer/{customerId}")
-    public ResponseEntity<AccountHolderModel> fetchCustomerId(@ApiParam @PathVariable long customerId){
-        Optional<Account> account = service.getAccountById(customerId);
-        if (!account.isPresent())
+    public ResponseEntity<CustomerAccountMapperEntity> fetchCustomerId(@ApiParam @PathVariable long customerId){
+//        Optional<Account> account = service.getAccountById(customerId);
+//        if (!account.isPresent())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(mapper.getCustomerById(customerId));
+//        return ResponseEntity.ok(mapper.getCustomerById(customerId));
     }
 
 }

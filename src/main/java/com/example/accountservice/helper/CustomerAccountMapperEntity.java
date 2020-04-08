@@ -1,6 +1,6 @@
-package com.example.AccountService.Model;
+package com.example.accountservice.helper;
 
-public class AccountHolderModel {
+public class CustomerAccountMapperEntity {
 
         private long id;
         private String name;

@@ -1,4 +1,4 @@
-package com.example.AccountService.Infrastructure;
+package com.example.accountservice.infrastructure;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
@@ -35,8 +35,8 @@ public class SwaggerConfiguration extends WebMvcConfigurerAdapter {
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
-                .title("Account Service API")
-                .description("\"Spring Boot REST API for Account Service\"")
+                .title("Account service API")
+                .description("\"Spring Boot REST API for Account service\"")
                 .version("1.0.0")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")

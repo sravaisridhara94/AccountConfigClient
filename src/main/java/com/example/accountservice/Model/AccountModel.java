@@ -1,6 +1,5 @@
-package com.example.AccountService.Model;
+package com.example.accountservice.model;
 
-import com.example.AccountService.Entity.AccountType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

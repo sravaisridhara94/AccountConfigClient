@@ -1,9 +1,8 @@
-package com.example.AccountService.Infrastructure;
+package com.example.accountservice.infrastructure;
 
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
