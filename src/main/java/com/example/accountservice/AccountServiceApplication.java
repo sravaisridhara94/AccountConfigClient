@@ -5,6 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
+/**
+ * Account Service Starter
+ * @author  Mounika
+ * @version 1.0
+ * @since   2020-08-04
+ */
+
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCircuitBreaker

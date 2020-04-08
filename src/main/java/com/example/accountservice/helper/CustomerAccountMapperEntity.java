@@ -1,5 +1,11 @@
 package com.example.accountservice.helper;
 
+/**
+ * Account Service Entity
+ * @author  Mounika
+ * @version 1.0
+ * @since   2020-08-04
+ */
 public class CustomerAccountMapperEntity {
 
         private long id;

@@ -8,6 +8,12 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Account Service
+ * @author  Mounika
+ * @version 1.0
+ * @since   2020-08-04
+ */
 @Service
 @Transactional
 public class AccountService {

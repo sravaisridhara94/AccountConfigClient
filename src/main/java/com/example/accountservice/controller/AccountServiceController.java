@@ -1,6 +1,7 @@
 package com.example.accountservice.controller;
 
 import com.example.accountservice.entity.Account;
+import com.example.accountservice.entity.AccountConstants;
 import com.example.accountservice.helper.AccountMapper;
 import com.example.accountservice.helper.AccountServiceRestCalls;
 import com.example.accountservice.helper.CustomerAccountMapperEntity;
@@ -18,6 +19,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Account Service Controller
+ * @author  Mounika
+ * @version 1.0
+ * @since   2020-08-04
+ */
 @RestController
 @RequestMapping("/v1/accounts")
 @RefreshScope
@@ -41,10 +48,10 @@ public class AccountServiceController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success|OK"),
-            @ApiResponse(code = 401, message = "not authorized!"),
-            @ApiResponse(code = 403, message = "forbidden!!!"),
-            @ApiResponse(code = 404, message = "not found!!!") })
+            @ApiResponse(code = AccountConstants.SUCCESS, message = AccountConstants.SUCCESS_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_AUTHORIZED, message = AccountConstants.NOT_AUTHORIZED_MESSAGE),
+            @ApiResponse(code = AccountConstants.FORBIDDEN, message = AccountConstants.FORBIDDEN_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_FOUND, message = AccountConstants.NOT_FOUND_MESSAGE) })
     @GetMapping
     public ResponseEntity<List<AccountModel>> fetchAccounts(){
         List<AccountModel> accounts = service.getAccounts().stream().map(o->AccountMapper.toModel(o))
@@ -53,10 +60,10 @@ public class AccountServiceController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success|OK"),
-            @ApiResponse(code = 401, message = "not authorized!"),
-            @ApiResponse(code = 403, message = "forbidden!!!"),
-            @ApiResponse(code = 404, message = "not found!!!") })
+            @ApiResponse(code = AccountConstants.SUCCESS, message = AccountConstants.SUCCESS_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_AUTHORIZED, message = AccountConstants.NOT_AUTHORIZED_MESSAGE),
+            @ApiResponse(code = AccountConstants.FORBIDDEN, message = AccountConstants.FORBIDDEN_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_FOUND, message = AccountConstants.NOT_FOUND_MESSAGE) })
     @GetMapping("/{accountId}")
     public ResponseEntity<AccountModel> fetchAccountId(@ApiParam @PathVariable long accountId){
         Optional<Account> account = service.getAccountById(accountId);
@@ -67,10 +74,10 @@ public class AccountServiceController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success|OK"),
-            @ApiResponse(code = 401, message = "not authorized!"),
-            @ApiResponse(code = 403, message = "forbidden!!!"),
-            @ApiResponse(code = 404, message = "not found!!!") })
+            @ApiResponse(code = AccountConstants.SUCCESS, message = AccountConstants.SUCCESS_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_AUTHORIZED, message = AccountConstants.NOT_AUTHORIZED_MESSAGE),
+            @ApiResponse(code = AccountConstants.FORBIDDEN, message = AccountConstants.FORBIDDEN_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_FOUND, message = AccountConstants.NOT_FOUND_MESSAGE) })
     @PostMapping
     public ResponseEntity<AccountModel> addOrUpdateAccount(@RequestBody AccountModel model){
         Optional<Account> account = service.getAccountById(model.getAccountId());
@@ -84,10 +91,10 @@ public class AccountServiceController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success|OK"),
-            @ApiResponse(code = 401, message = "not authorized!"),
-            @ApiResponse(code = 403, message = "forbidden!!!"),
-            @ApiResponse(code = 404, message = "not found!!!") })
+            @ApiResponse(code = AccountConstants.SUCCESS, message = AccountConstants.SUCCESS_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_AUTHORIZED, message = AccountConstants.NOT_AUTHORIZED_MESSAGE),
+            @ApiResponse(code = AccountConstants.FORBIDDEN, message = AccountConstants.FORBIDDEN_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_FOUND, message = AccountConstants.NOT_FOUND_MESSAGE) })
     @DeleteMapping("/{accountId}")
     public ResponseEntity<AccountModel> deleteAccount(@PathVariable long accountId){
         Optional<Account> account = service.getAccountById(accountId);
@@ -99,10 +106,10 @@ public class AccountServiceController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success|OK"),
-            @ApiResponse(code = 401, message = "not authorized!"),
-            @ApiResponse(code = 403, message = "forbidden!!!"),
-            @ApiResponse(code = 404, message = "not found!!!") })
+            @ApiResponse(code = AccountConstants.SUCCESS, message = AccountConstants.SUCCESS_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_AUTHORIZED, message = AccountConstants.NOT_AUTHORIZED_MESSAGE),
+            @ApiResponse(code = AccountConstants.FORBIDDEN, message = AccountConstants.FORBIDDEN_MESSAGE),
+            @ApiResponse(code = AccountConstants.NOT_FOUND, message = AccountConstants.NOT_FOUND_MESSAGE) })
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<CustomerAccountMapperEntity> fetchCustomerId(@ApiParam @PathVariable long customerId){
         Optional<Account> account = service.getAccountById(customerId);

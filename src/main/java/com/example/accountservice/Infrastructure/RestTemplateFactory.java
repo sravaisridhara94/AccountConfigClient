@@ -5,6 +5,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Rest template factory holds singleton values.
+ * @author  Mounika
+ * @version 1.0
+ * @since   2020-08-04
+ */
+
 @Component
 public class RestTemplateFactory {
 

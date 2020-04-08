@@ -3,6 +3,12 @@ package com.example.accountservice.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+/**
+ * Account Service API
+ * @author  Mounika
+ * @version 1.0
+ * @since   2020-08-04
+ */
 @JsonSerialize
 public class AccountModel {
 
