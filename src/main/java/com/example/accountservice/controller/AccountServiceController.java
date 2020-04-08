@@ -105,11 +105,11 @@ public class AccountServiceController {
             @ApiResponse(code = 404, message = "not found!!!") })
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<CustomerAccountMapperEntity> fetchCustomerId(@ApiParam @PathVariable long customerId){
-//        Optional<Account> account = service.getAccountById(customerId);
-//        if (!account.isPresent())
+        Optional<Account> account = service.getAccountById(customerId);
+        if (!account.isPresent())
             return ResponseEntity.notFound().build();
 
-//        return ResponseEntity.ok(mapper.getCustomerById(customerId));
+        return ResponseEntity.ok(mapper.getCustomerById(customerId));
     }
 
 }
